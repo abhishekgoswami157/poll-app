@@ -71,6 +71,7 @@ function App(props) {
           <Route exact path="/polls/:id" component={ShowPoll} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/login" component={Login} />
+          <Route component={FourOFour} />
         </Switch>
       </UserContext.Provider>
     </Router>
