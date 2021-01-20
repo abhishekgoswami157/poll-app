@@ -12,8 +12,8 @@ module SessionsHelper
   end
 
   def log_out
-    current_user = nil
     session[:user_id] = nil
+    current_user = nil
   end
 
   def require_signin
