@@ -1,5 +1,5 @@
 class PollsController < ApplicationController
-  # before_action :authenticate_user
+  before_action :require_signin, except: [:index]
   def index
     @polls = Poll.all
     @current_user = current_user

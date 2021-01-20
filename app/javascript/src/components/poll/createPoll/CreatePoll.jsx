@@ -5,6 +5,7 @@ import CreateOption from "./CreateOption";
 import pollsApi from "../../../apis/polls";
 import { validateCreatePoll } from "../../../utils/validateLogic";
 import UserContext from "../../Context/UserContext";
+import Errors from "../../../utils/Errors";
 
 function CreatePoll({ history }) {
   let context = useContext(UserContext);
@@ -25,7 +26,7 @@ function CreatePoll({ history }) {
       option3: "",
       option4: "",
     },
-    validate: validateCreatePoll,
+    // validate: validateCreatePoll,
 
     onSubmit: async (values, actions) => {
       try {
@@ -51,7 +52,7 @@ function CreatePoll({ history }) {
   return (
     <Layout
       currentUser={context.currentUser}
-      setCurrenUser={context.setCurrenUser}
+      setCurrentUser={context.setCurrentUser}
     >
       <section className="polls-wrapper">
         <h2 className="mt-12 mb-10 text-center text-gray-700 text-3xl font-semibold">
@@ -59,9 +60,7 @@ function CreatePoll({ history }) {
         </h2>
 
         <div className="bg-gray-100 shadow-md px-6 py-8">
-          <small className="mb-2 text-red-800 font-lg font-semibold">
-            {authErr && authErr}
-          </small>
+          {authErr ? <Errors authErr={authErr} /> : ""}
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <label

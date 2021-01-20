@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import authApi from "../../apis/auth";
+import Errors from "../../utils/Errors";
 import { validateSignup } from "../../utils/validateLogic";
 import UserContext from "../Context/UserContext";
 import Layout from "../layout";
@@ -59,9 +60,7 @@ function Signup({ history }) {
 
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-              <small className="mb-2 text-red-800 font-lg font-semibold">
-                {authErr && authErr}
-              </small>
+              {authErr ? <Errors authErr={authErr} /> : ""}
               <form onSubmit={handleSubmit}>
                 <div>
                   <label

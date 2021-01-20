@@ -16,10 +16,10 @@ module SessionsHelper
     session[:user_id] = nil
   end
 
-  def authenticate_user
+  def require_signin
     unless logged_in?
-      render json: { notice: "You need to be Logged in first!"}
-      redirect_to new_session_url
+      render status: :unprocessable_entity, json: { errors: "You need to be Logged in first!"}
+      # redirect_to new_session_url
     end
   end
 end

@@ -1,6 +1,7 @@
 import { has } from "ramda";
 import React, { useEffect, useState } from "react";
 import votesApi from "../../../apis/votes";
+import Errors from "../../../utils/Errors";
 
 export default function Options({
   poll,
@@ -50,9 +51,7 @@ export default function Options({
   return (
     <div class="p-8 flex justify-center">
       <div class="w-full max-w-xl mx-auto">
-        <small className="mb-2 text-red-800 font-lg font-semibold">
-          {authErr && authErr}
-        </small>
+        {authErr ? <Errors authErr={authErr} /> : ""}
         <fieldset>
           <ul
             class="space-y-4"
