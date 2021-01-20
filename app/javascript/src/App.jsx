@@ -40,12 +40,12 @@ function App(props) {
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
         <ToastContainer />
         {/* {currentUser ? <PrivateRoute /> : <PublicRoute />} */}
-        <Switch>
+        {/* <Switch>
           <Route exact path="/">
             <Dashboard />
           </Route>
           <Route exact path="/polls">
-            <Redirect to="/" />
+            <Dashboard />
           </Route>
           <Route exact path="/signup">
             <Signup />
@@ -53,13 +53,24 @@ function App(props) {
           <Route exact path="/login">
             <Login />
           </Route>
-          <Route exact path="/polls/create">
-            {currentUser ? <CreatePoll /> : <Redirect to="/login" />}
+          <Route exact path="/polls/create"> */}
+        {/* {currentUser ? <CreatePoll /> : <Redirect to="/login" />} */}
+        {/* <CreatePoll />
           </Route>
-          <Route exact path="/polls/:id">
-            {currentUser ? <ShowPoll /> : <Redirect to="/login" />}
+          <Route exact path="/polls/:id"> */}
+        {/* {currentUser ? <ShowPoll /> : <Redirect to="/login" />} */}
+        {/* <ShowPoll />
           </Route>
           <Route component={FourOFour}></Route>
+        </Switch> */}
+
+        <Switch>
+          <Route exact path="/" component={Dashboard} />
+          <Route exact path="/polls" component={Dashboard} />
+          <Route exact path="/polls/create" component={CreatePoll} />
+          <Route exact path="/polls/:id" component={ShowPoll} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/login" component={Login} />
         </Switch>
       </UserContext.Provider>
     </Router>
