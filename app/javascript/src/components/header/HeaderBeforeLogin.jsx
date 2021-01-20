@@ -9,9 +9,6 @@ function HeaderBeforeLogin() {
           <div>
             <div className="flex items-center">
               <Link to="/">
-                {/* <img className="w-36 h-12"
-                  src="/img/conduit-logo-header-black-new.png"
-                  alt="logo"/> */}
                 <h2 className="text-2xl font-bold text-gray-700 ">Poll-App</h2>
               </Link>
             </div>

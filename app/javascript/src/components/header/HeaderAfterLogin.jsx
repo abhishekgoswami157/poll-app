@@ -3,18 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import authApi from "../../apis/auth";
 
 function HeaderAfterLogin({ currentUser, setCurrentUser }) {
-  // const handleLogout = async () => {
-  //   try {
-  //     await authApi.logout();
-  //     setToLocalStorage({ authToken: null, email: null, userId: null });
-  //     resetAuthTokens();
-  //     window.location.href = "/";
-  //   } catch (error) {
-  //     logger.error(error);
-  //   }
-  // };
   async function handleLogout(event) {
-    console.log("entered in logout");
     try {
       authApi.logout();
       setCurrentUser(null);
@@ -29,9 +18,6 @@ function HeaderAfterLogin({ currentUser, setCurrentUser }) {
           <div>
             <div className="flex items-center">
               <Link to="/">
-                {/* <img className="w-36 h-12"
-                  src="/img/conduit-logo-header-black-new.png"
-                  alt="logo"/> */}
                 <h2 className="text-2xl font-bold text-gray-700 ">Poll-App</h2>
               </Link>
             </div>
