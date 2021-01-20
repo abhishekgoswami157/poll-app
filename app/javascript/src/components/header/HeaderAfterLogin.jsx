@@ -5,12 +5,13 @@ import authApi from "../../apis/auth";
 function HeaderAfterLogin({ currentUser, setCurrentUser }) {
   async function handleLogout(event) {
     try {
-      authApi.logout();
+      await authApi.logout();
       setCurrentUser(null);
     } catch (error) {
       console.log(error);
     }
   }
+
   return (
     <header className="border-b-2 border-gray-300 font-nunito py-3 shadow-md">
       <div className="container">
