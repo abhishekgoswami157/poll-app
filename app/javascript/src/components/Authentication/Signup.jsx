@@ -1,13 +1,15 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import authApi from "../../apis/auth";
 import { validateSignup } from "../../utils/validateLogic";
+import UserContext from "../Context/UserContext";
 import Layout from "../layout";
 
 function Signup({ history }) {
   let [authErr, setAuthErr] = useState("");
-  const [loading, setLoading] = useState(false);
+  let [loading, setLoading] = useState(false);
+  let context = useContext(UserContext);
 
   const {
     values,
@@ -27,8 +29,7 @@ function Signup({ history }) {
     validate: validateSignup,
     onSubmit: async (values, actions) => {
       try {
-        // setLoading(true);
-        await authApi.signup({
+        let response = await authApi.signup({
           user: {
             name: values.name,
             email: values.email,
@@ -36,12 +37,12 @@ function Signup({ history }) {
             password_confirmation: values.confirmPassword,
           },
         });
+        console.log(response, "RESPONE IN SIGNUP");
+        context.setCurrentUser(response.data.current_user);
         actions.setSubmitting(false);
         history.push("/");
       } catch (error) {
-        // history.push("/");
-        console.log(error);
-        // logger.error(erorr);
+        setAuthErr(error?.response?.data?.errors);
       }
     },
   });
@@ -51,11 +52,6 @@ function Signup({ history }) {
       <section className="bg-gray-50 h-screen">
         <div className="pt-20 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md flex justify-center">
-            {/* <img
-        className="w-32 h-32"
-        src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/76ceb1faa939ede03abacb6efacdde16/trello-logo-blue.svg"
-        alt="trello-logo"
-      /> */}
             <h2 className="text-4xl font-semibold text-gray-700 mb-4">
               Sign up
             </h2>
@@ -63,6 +59,9 @@ function Signup({ history }) {
 
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+              <small className="mb-2 text-red-800 font-lg font-semibold">
+                {authErr && authErr}
+              </small>
               <form onSubmit={handleSubmit}>
                 <div>
                   <label
@@ -115,11 +114,7 @@ function Signup({ history }) {
                 }`}
                     />
                     <small className="block text-red-700">
-                      {(errors &&
-                        errors.email &&
-                        touched.email &&
-                        errors.email) ||
-                        authErr}
+                      {errors && errors.email && touched.email && errors.email}
                     </small>
                   </div>
                 </div>
@@ -134,7 +129,6 @@ function Signup({ history }) {
                   <div className="mt-1 relative">
                     <input
                       id="password"
-                      // type={showPassword ? "text" : "password"}
                       type="password"
                       name="password"
                       onChange={handleChange}
@@ -147,11 +141,7 @@ function Signup({ history }) {
                           : ` focus:border-green-700`
                       }`}
                     />
-                    {/* {showPassword ? (
-                <HidePassword setShowPassword={setShowPassword} />
-              ) : (
-                <ShowPassword setShowPassword={setShowPassword} />
-              )} */}
+
                     <small className="block text-red-700">
                       {errors &&
                         errors.password &&
@@ -171,7 +161,6 @@ function Signup({ history }) {
                   <div className="mt-1 relative">
                     <input
                       id="confirmPassword"
-                      // type={showPassword ? "text" : "confirmPassword"}
                       type="Password"
                       name="confirmPassword"
                       onChange={handleChange}

@@ -6,11 +6,12 @@ class SessionsController < ApplicationController
   def create
     puts  "ENTERED"
     @user = User.find_by(email: params[:user][:email])
-    puts @user.email, "USER"
     if @user && @user.authenticate(params[:user][:password])
       log_in @user
-      render status: :ok, json: { notice: "logged in successfully"}
+      @current_user = current_user
+      render status: :ok, json: { notice: "logged in successfully", current_user: @current_user}
     else
+      puts "entered error"
       render status: :unprocessable_entity, json: {errors: ["Invalid email / password combination"]}
     end
   end

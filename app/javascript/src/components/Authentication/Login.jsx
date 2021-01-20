@@ -1,12 +1,14 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import authApi from "../../apis/auth";
 import { validateLogin } from "../../utils/validateLogic";
+import UserContext from "../Context/UserContext";
 import Layout from "../layout";
 
 function Login({ history }) {
   let [authErr, setAuthErr] = useState("");
+  let context = useContext(UserContext);
 
   const {
     values,
@@ -27,19 +29,18 @@ function Login({ history }) {
     onSubmit: async (values, actions) => {
       try {
         console.log("ENTERED");
-        // setLoading(true);
-        await authApi.login({
+        let response = await authApi.login({
           user: {
             email: values.email,
             password: values.password,
           },
         });
+        context.setCurrentUser(response.data.current_user);
         actions.setSubmitting(false);
         history.push("/");
       } catch (error) {
-        history.push("/");
+        setAuthErr(error?.response?.data?.errors);
         console.log(error);
-        // logger.error(erorr);
       }
     },
   });
@@ -49,11 +50,6 @@ function Login({ history }) {
       <section className="bg-gray-50 h-screen">
         <div className="pt-20 flex flex-col justify-center sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md flex justify-center">
-            {/* <img
-      className="w-32 h-32"
-      src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/76ceb1faa939ede03abacb6efacdde16/trello-logo-blue.svg"
-      alt="trello-logo"
-    /> */}
             <h2 className="text-4xl font-semibold text-gray-800 mb-4">
               Log in
             </h2>
@@ -61,6 +57,9 @@ function Login({ history }) {
 
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+              <small className="mb-2 text-red-800 font-lg font-semibold">
+                {authErr && authErr}
+              </small>
               <form onSubmit={handleSubmit}>
                 <div className="mt-6">
                   <label
@@ -85,11 +84,7 @@ function Login({ history }) {
               }`}
                     />
                     <small className="block text-red-700">
-                      {(errors &&
-                        errors.email &&
-                        touched.email &&
-                        errors.email) ||
-                        authErr}
+                      {errors && errors.email && touched.email && errors.email}
                     </small>
                   </div>
                 </div>
@@ -104,7 +99,6 @@ function Login({ history }) {
                   <div className="mt-1 relative">
                     <input
                       id="password"
-                      // type={showPassword ? "text" : "password"}
                       type="password"
                       name="password"
                       onChange={handleChange}
@@ -117,11 +111,7 @@ function Login({ history }) {
                         : ` focus:border-green-700`
                     }`}
                     />
-                    {/* {showPassword ? (
-              <HidePassword setShowPassword={setShowPassword} />
-            ) : (
-              <ShowPassword setShowPassword={setShowPassword} />
-            )} */}
+
                     <small className="block text-red-700">
                       {errors &&
                         errors.password &&
@@ -130,31 +120,6 @@ function Login({ history }) {
                     </small>
                   </div>
                 </div>
-
-                {/* <div className="mt-6 flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember_me"
-                    type="checkbox"
-                    className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                  />
-                  <label
-                    for="remember_me"
-                    className="ml-2 block text-sm leading-5 text-gray-900"
-                  >
-                    Remember me
-                  </label>
-                </div>
-
-                <div className="text-sm leading-5">
-                  <a
-                    href="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-              </div> */}
 
                 <div className="mt-6">
                   <span className="block w-full rounded-md shadow-sm">

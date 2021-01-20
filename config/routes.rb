@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # resources :votes
-  resources :users
+  resources :users, only: [:create]
+  resource :user, only: [:show]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   # resources :polls, only: [:new, :create, :index, :show]

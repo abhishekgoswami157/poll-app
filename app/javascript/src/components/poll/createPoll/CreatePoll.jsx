@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 // import { validateLogin } from "../../utils/validateLogic";
 import Layout from "../../layout";
 import CreateOption from "./CreateOption";
 import pollsApi from "../../../apis/polls";
 import { validateCreatePoll } from "../../../utils/validateLogic";
+import UserContext from "../../Context/UserContext";
 
 function CreatePoll({ history }) {
   // let [title, setTitle] = useState("")
   // let [option1, setOption1] = useState("")
   // let [option2, setOption2]
+  let context = useContext(UserContext);
   const {
     values,
     errors,
@@ -71,7 +73,10 @@ function CreatePoll({ history }) {
     },
   });
   return (
-    <Layout>
+    <Layout
+      currentUser={context.currentUser}
+      setCurrenUser={context.setCurrenUser}
+    >
       <section className="polls-wrapper">
         <h2 className="mt-12 mb-10 text-center text-gray-700 text-3xl font-semibold">
           Cretae Poll

@@ -13,12 +13,13 @@ export function validateSignup(values) {
   if (!name) {
     errors.name = "*name is required";
   } else if (name.length < 4) {
-    errors.name = "name must be atleast 5 characters long!!";
-  } else if (name.toLocaleLowerCase() !== name) {
-    errors.name = "name must be in Lowercase";
-  } else if (!hasNumber) {
-    errors.name = "name must include atleast one number";
+    errors.name = "name must be atleast 4 characters long!!";
   }
+  // } else if (name.toLocaleLowerCase() !== name) {
+  //   errors.name = "name must be in Lowercase";
+  // } else if (!hasNumber) {
+  //   errors.name = "name must include atleast one number";
+  // }
 
   if (!values.email) {
     errors.email = "Email is Required";
