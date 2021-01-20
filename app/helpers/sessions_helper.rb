@@ -18,7 +18,7 @@ module SessionsHelper
 
   def require_signin
     unless logged_in?
-      render status: :unprocessable_entity, json: { errors: "You need to be Logged in first!"}
+      render status: :unprocessable_entity, json: { notice: "You need to be Logged in first!"}
       # redirect_to new_session_url
     end
   end

@@ -1,4 +1,5 @@
 class VotesController < ApplicationController
+  before_action :require_signin
   def create
     @poll = Poll.find(params[:vote][:poll_id])
 
