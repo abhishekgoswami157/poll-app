@@ -1,12 +1,18 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import authApi from "../../apis/auth";
+import UserContext from "../Context/UserContext";
 
-function HeaderAfterLogin({ currentUser, setCurrentUser }) {
+function HeaderAfterLogin() {
+  let { currentUser, setCurrentUser } = useContext(UserContext);
+
+  let history = useHistory();
+
   async function handleLogout(event) {
     try {
       await authApi.logout();
       setCurrentUser(null);
+      history.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -44,14 +50,13 @@ function HeaderAfterLogin({ currentUser, setCurrentUser }) {
               </li>
 
               <li>
-                <Link
-                  className="ml-6 text-xl  hover:text-gray-400 tracking-wider"
-                  activeClassName="border-b border-gray-400"
-                  to="/"
+                <p
+                  className="ml-6 text-xl  hover:text-gray-400 tracking-wider cursor-pointer"
+                  // activeClassName="border-b border-gray-400"
                   onClick={() => handleLogout()}
                 >
                   logout
-                </Link>
+                </p>
               </li>
             </ul>
           </div>

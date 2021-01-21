@@ -1,16 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import UserContext from "../Context/UserContext";
 import HeaderAfterLogin from "./HeaderAfterLogin";
 import HeaderBeforeLogin from "./HeaderBeforeLogin";
 
-function Header({ currentUser, setCurrentUser }) {
-  return currentUser ? (
-    <HeaderAfterLogin
-      currentUser={currentUser}
-      setCurrentUser={setCurrentUser}
-    />
-  ) : (
-    <HeaderBeforeLogin />
-  );
+function Header() {
+  const { currentUser } = useContext(UserContext);
+
+  return currentUser ? <HeaderAfterLogin /> : <HeaderBeforeLogin />;
 }
 
 export default Header;

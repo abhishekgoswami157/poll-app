@@ -12,11 +12,10 @@ import Login from "./components/Authentication/Login";
 import Signup from "./components/Authentication/Signup";
 import UserContext from "./components/Context/UserContext";
 import Dashboard from "./components/dashboard/Dashboard";
-import Home from "./components/Home";
 import CreatePoll from "./components/poll/createPoll/CreatePoll";
 import ShowPoll from "./components/poll/showPoll/ShowPoll";
 
-function App(props) {
+function App() {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -39,8 +38,11 @@ function App(props) {
     <Router>
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
         <ToastContainer />
-        {/* {currentUser ? <PrivateRoute /> : <PublicRoute />} */}
         {/* <Switch>
+          <Routes currentUser={currentUser} />
+        </Switch> */}
+
+        <Switch>
           <Route exact path="/">
             <Dashboard />
           </Route>
@@ -53,25 +55,13 @@ function App(props) {
           <Route exact path="/login">
             <Login />
           </Route>
-          <Route exact path="/polls/create"> */}
-        {/* {currentUser ? <CreatePoll /> : <Redirect to="/login" />} */}
-        {/* <CreatePoll />
+          <Route exact path="/polls/create">
+            {currentUser ? <CreatePoll /> : <Redirect to="/login" />}
           </Route>
-          <Route exact path="/polls/:id"> */}
-        {/* {currentUser ? <ShowPoll /> : <Redirect to="/login" />} */}
-        {/* <ShowPoll />
+          <Route exact path="/polls/:id">
+            {currentUser ? <ShowPoll /> : <Redirect to="/login" />}
           </Route>
           <Route component={FourOFour}></Route>
-        </Switch> */}
-
-        <Switch>
-          <Route exact path="/" component={Dashboard} />
-          <Route exact path="/polls" component={Dashboard} />
-          <Route exact path="/polls/create" component={CreatePoll} />
-          <Route exact path="/polls/:id" component={ShowPoll} />
-          <Route exact path="/signup" component={Signup} />
-          <Route exact path="/login" component={Login} />
-          <Route component={FourOFour} />
         </Switch>
       </UserContext.Provider>
     </Router>
@@ -82,24 +72,41 @@ function FourOFour() {
   return <h1>Page Not Found</h1>;
 }
 
-function PrivateRoute() {
+function Routes({ currentUser }) {
+  console.log("Comming in here in public routes");
+
   return (
-    <Switch>
-      <Route exact path="/" component={Dashboard} />
-      <Route exact path="/polls" component={Dashboard} />
-      <Route exact path="/polls/create" component={CreatePoll} />
-      <Route exact path="/polls/:id" component={ShowPoll} />
-    </Switch>
-  );
-}
-function PublicRoute() {
-  return (
-    <Switch>
+    <>
       <Route exact path="/" component={Dashboard} />
       <Route exact path="/polls" component={Dashboard} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/login" component={Login} />
-    </Switch>
+      <Route
+        exact
+        path="/polls/create"
+        component={() => {
+          console.log(currentUser);
+          if (currentUser) {
+            return <CreatePoll />;
+          }
+
+          return <Redirect to={{ pathname: "/login" }} />;
+        }}
+      />
+      <Route exact path="/polls/:id" component={ShowPoll} />
+      {/* <Route
+        exact
+        path="/polls/:id"
+        component={() => {
+          console.log(currentUser);
+          if (currentUser) {
+            return <ShowPoll />;
+          }
+
+          return <Redirect to={{ pathname: "/login" }} />;
+        }}
+      /> */}
+    </>
   );
 }
 

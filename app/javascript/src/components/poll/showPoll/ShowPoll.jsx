@@ -2,14 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import pollsApi from "../../../apis/polls";
 import UserContext from "../../Context/UserContext";
-import Poll from "../../dashboard/Poll";
 import Layout from "../../layout";
 import PageLoader from "../../PageLoader";
 import Options from "./Options";
 
 function ShowPoll() {
   let context = useContext(UserContext);
-  console.log(context, "CONTEXT");
   const { id } = useParams();
   let [poll, setPoll] = useState(null);
   let [pollOptions, setPollOptions] = useState(null);
@@ -18,7 +16,6 @@ function ShowPoll() {
   async function fetchPoll() {
     try {
       const response = await pollsApi.show(id);
-      console.log(response.data.poll);
       setPoll(response.data.poll);
       setPollOptions(response.data.options);
       // setCurrentUser(response.data.current_user);
@@ -28,7 +25,6 @@ function ShowPoll() {
   }
 
   useEffect(() => {
-    console.log("entered useeffect");
     fetchPoll();
   }, []);
 

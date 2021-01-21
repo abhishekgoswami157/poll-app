@@ -1,14 +1,15 @@
 import { useFormik } from "formik";
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import authApi from "../../apis/auth";
 import { validateLogin } from "../../utils/validateLogic";
 import UserContext from "../Context/UserContext";
 import Layout from "../layout";
 
-function Login({ history }) {
+function Login({ authNotification }) {
   let [authErr, setAuthErr] = useState("");
   let context = useContext(UserContext);
+  let history = useHistory();
 
   const {
     values,
@@ -28,7 +29,6 @@ function Login({ history }) {
     validate: validateLogin,
     onSubmit: async (values, actions) => {
       try {
-        console.log("ENTERED");
         let response = await authApi.login({
           user: {
             email: values.email,
@@ -56,6 +56,20 @@ function Login({ history }) {
           </div>
 
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
+            {/* {context.currentUser ? (
+              ""
+            ) : (
+              <p className="mb-2 text-red-800 font-lg font-semibold">
+                *You need to be logged in first to access this Route
+              </p>
+            )} */}
+            {authNotification ? (
+              <p className="mb-2 text-red-800 font-lg font-semibold">
+                {authNotification}
+              </p>
+            ) : (
+              ""
+            )}
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
               <small className="mb-2 text-red-800 font-lg font-semibold">
                 {authErr && authErr}

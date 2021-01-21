@@ -2,9 +2,9 @@ class PollsController < ApplicationController
   before_action :require_signin, except: [:index]
   def index
     @polls = Poll.all
-    @current_user = current_user
-    puts current_user
-    render status: :ok, json: {polls: @polls, current_user: @current_user}
+    # @current_user = current_user
+    # puts current_user
+    render status: :ok, json: {polls: @polls}
   end
 
   def new

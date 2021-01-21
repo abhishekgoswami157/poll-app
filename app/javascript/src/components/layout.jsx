@@ -4,10 +4,7 @@ import Header from "./header/Header";
 function Layout(props) {
   return (
     <>
-      <Header
-        currentUser={props.currentUser}
-        setCurrentUser={props.setCurrentUser}
-      />
+      <Header />
       {props.children}
     </>
   );

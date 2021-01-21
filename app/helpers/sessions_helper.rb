@@ -4,7 +4,7 @@ module SessionsHelper
   end
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @curren_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
   def logged_in?
@@ -12,8 +12,10 @@ module SessionsHelper
   end
 
   def log_out
-    session[:user_id] = nil
+    # session[:user_id] = nil
+    session.delete(:user_id)
     current_user = nil
+    # puts current_user
   end
 
   def require_signin

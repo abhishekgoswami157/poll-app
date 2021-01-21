@@ -1,16 +1,17 @@
 import { useFormik } from "formik";
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import authApi from "../../apis/auth";
 import Errors from "../../utils/Errors";
 import { validateSignup } from "../../utils/validateLogic";
 import UserContext from "../Context/UserContext";
 import Layout from "../layout";
 
-function Signup({ history }) {
+function Signup() {
   let [authErr, setAuthErr] = useState("");
   let [loading, setLoading] = useState(false);
   let context = useContext(UserContext);
+  let history = useHistory();
 
   const {
     values,
@@ -38,7 +39,6 @@ function Signup({ history }) {
             password_confirmation: values.confirmPassword,
           },
         });
-        console.log(response, "RESPONE IN SIGNUP");
         context.setCurrentUser(response.data.current_user);
         actions.setSubmitting(false);
         history.push("/");

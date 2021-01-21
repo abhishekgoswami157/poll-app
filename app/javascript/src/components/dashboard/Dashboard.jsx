@@ -32,10 +32,7 @@ function Dashboard() {
 
   if (!either(isNil, isEmpty)(polls)) {
     return (
-      <Layout
-        currentUser={context.currentUser}
-        setCurrentUser={context.setCurrentUser}
-      >
+      <Layout>
         <section className="polls-wrapper">
           <div>
             <Link to="/polls/create">
