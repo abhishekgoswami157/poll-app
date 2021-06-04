@@ -12,17 +12,21 @@ import Login from "./components/Authentication/Login";
 import Signup from "./components/Authentication/Signup";
 import UserContext from "./components/Context/UserContext";
 import Dashboard from "./components/dashboard/Dashboard";
+import PageLoader from "./components/PageLoader";
 import CreatePoll from "./components/poll/createPoll/CreatePoll";
 import ShowPoll from "./components/poll/showPoll/ShowPoll";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
+  const [isAuthComplete, setIsAuthComplete] = useState(true);
 
   async function fetchCurrentUser() {
     try {
+      setIsAuthComplete(false);
       const response = await usersApi.show();
       setCurrentUser(response.data.current_user);
+      setIsAuthComplete(true);
     } catch (error) {
       console.log(error);
     }
@@ -34,14 +38,17 @@ function App() {
     setAuthHeaders(setLoading);
   }, []);
 
+  if (!isAuthComplete) {
+    return <PageLoader />;
+  }
+  if (loading) {
+    return <PageLoader />;
+  }
+
   return (
     <Router>
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
         <ToastContainer />
-        {/* <Switch>
-          <Routes currentUser={currentUser} />
-        </Switch> */}
-
         <Switch>
           <Route exact path="/">
             <Dashboard />
@@ -70,44 +77,6 @@ function App() {
 
 function FourOFour() {
   return <h1>Page Not Found</h1>;
-}
-
-function Routes({ currentUser }) {
-  console.log("Comming in here in public routes");
-
-  return (
-    <>
-      <Route exact path="/" component={Dashboard} />
-      <Route exact path="/polls" component={Dashboard} />
-      <Route exact path="/signup" component={Signup} />
-      <Route exact path="/login" component={Login} />
-      <Route
-        exact
-        path="/polls/create"
-        component={() => {
-          console.log(currentUser);
-          if (currentUser) {
-            return <CreatePoll />;
-          }
-
-          return <Redirect to={{ pathname: "/login" }} />;
-        }}
-      />
-      <Route exact path="/polls/:id" component={ShowPoll} />
-      {/* <Route
-        exact
-        path="/polls/:id"
-        component={() => {
-          console.log(currentUser);
-          if (currentUser) {
-            return <ShowPoll />;
-          }
-
-          return <Redirect to={{ pathname: "/login" }} />;
-        }}
-      /> */}
-    </>
-  );
 }
 
 export default App;

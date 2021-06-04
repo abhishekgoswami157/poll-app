@@ -9,7 +9,7 @@ function HeaderBeforeLogin() {
           <div>
             <div className="flex items-center">
               <Link to="/">
-                <h2 className="text-2xl font-bold text-gray-700 ">Poll-App</h2>
+                <h2 className="text-xl font-bold text-gray-700 ">Poll-App</h2>
               </Link>
             </div>
           </div>
@@ -18,7 +18,7 @@ function HeaderBeforeLogin() {
             <ul className="flex text-gray-900">
               <li>
                 <NavLink
-                  className=" text-xl hover:text-gray-400 tracking-wider"
+                  className=" text-md hover:text-gray-400 tracking-wider"
                   activeClassName="border-b border-gray-400"
                   to="/"
                   exact
@@ -28,7 +28,7 @@ function HeaderBeforeLogin() {
               </li>
               <li>
                 <NavLink
-                  className="ml-6 text-xl  hover:text-gray-400 tracking-wider"
+                  className="ml-6 text-md  hover:text-gray-400 tracking-wider"
                   activeClassName="border-b border-gray-400"
                   to="/signup"
                   exact
@@ -38,7 +38,7 @@ function HeaderBeforeLogin() {
               </li>
               <li>
                 <NavLink
-                  className="ml-6 text-xl  hover:text-gray-400 tracking-wider"
+                  className="ml-6 text-md  hover:text-gray-400 tracking-wider"
                   activeClassName="border-b border-gray-400"
                   to="/login"
                 >

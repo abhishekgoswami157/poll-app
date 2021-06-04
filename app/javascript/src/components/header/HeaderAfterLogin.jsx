@@ -25,22 +25,21 @@ function HeaderAfterLogin() {
           <div>
             <div className="flex items-center">
               <Link to="/">
-                <h2 className="text-2xl font-bold text-gray-700 ">Poll-App</h2>
+                <h2 className="text-xl font-bold text-gray-700 ">Poll-App</h2>
               </Link>
             </div>
           </div>
 
           <div>
             <ul className="flex text-gray-900">
-              <li className="flex flex-col justify-center items-center text-red-600">
-                <p className="hover:text-gray-400 tracking-wider">Welcome</p>
+              <li className="flex justify-center items-center text-red-600 text-md">
                 <p className="hover:text-gray-400 tracking-wider">
                   {currentUser.name}
                 </p>
               </li>
               <li>
                 <NavLink
-                  className="ml-6 text-xl hover:text-gray-400 tracking-wider"
+                  className="ml-6 hover:text-gray-400 tracking-wider text-md"
                   activeClassName="border-b border-gray-400"
                   to="/"
                   exact
@@ -51,11 +50,10 @@ function HeaderAfterLogin() {
 
               <li>
                 <p
-                  className="ml-6 text-xl  hover:text-gray-400 tracking-wider cursor-pointer"
-                  // activeClassName="border-b border-gray-400"
+                  className="ml-6 hover:text-gray-400 tracking-wider cursor-pointer text-md"
                   onClick={() => handleLogout()}
                 >
-                  logout
+                  Logout
                 </p>
               </li>
             </ul>

@@ -42,7 +42,7 @@ function CreatePoll({ history }) {
           },
         });
         actions.setSubmitting(false);
-        history.push("/");
+        window.location.href = "/";
       } catch (error) {
         setAuthErr(error?.response?.data?.errors);
         actions.setSubmitting(false);

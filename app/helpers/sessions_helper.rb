@@ -12,16 +12,13 @@ module SessionsHelper
   end
 
   def log_out
-    # session[:user_id] = nil
     session.delete(:user_id)
     current_user = nil
-    # puts current_user
   end
 
   def require_signin
     unless logged_in?
       render status: :unprocessable_entity, json: { notice: "You need to be Logged in first!"}
-      # redirect_to new_session_url
     end
   end
 end

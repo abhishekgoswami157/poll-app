@@ -52,7 +52,10 @@ function Dashboard() {
 
   return (
     <Layout>
-      <h1 className="text-xl leading-5 text-center">
+      <Link to="/polls/create">
+        <button className="btn mt-8">Create Polls</button>
+      </Link>
+      <h1 className="text-xl leading-5 text-center mt-10">
         You have no polls to show 😔
       </h1>
     </Layout>
